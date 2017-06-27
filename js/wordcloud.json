@@ -1,0 +1,16 @@
+{
+	"objetos":
+	[
+		{
+			"wcid": 0,
+			"classe": "big",
+			"titulo": "EDUCAÇÃO"
+		}
+		{
+			"wcid": 1,
+			"classe": "med",
+			"titulo": "Mídia"
+		}
+
+	]
+}
