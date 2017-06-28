@@ -20,9 +20,21 @@
 </header>
 
 <div class="content">
-<div id="wrapper">
-	<div id="stage"></div>
-</div>
+	<div class="formulario col3-4 tcenter">
+		<form method="post" action="validateform.php">
+		<div class="col1-4 left tright">
+			<p><label for="fparent">Pai:</label></p>
+			<p><label for="fclass">Classe:</label></p>
+			<p><label for="ftitle">Titulo:</label></p>
+			<p><label for="fdesc">Descrição:</label></p>
+		</div>
+		<div class="col3-4 right tleft">
+			<p><input type="text" id="fparent" name="fparent" required/></p>
+			<p><input type="text" id="fclass" name="fclass" required/></p>
+			<p><input type="text" id="ftitle" name="ftitle" required/></p>
+			<p><input type="textarea" id="fdesc" name="fdesc" required/></p>
+		</div>
+	</div>
 </div>
 
 <footer>
