@@ -1,4 +1,0 @@
-# GUIA PARA SVG
-
-Separar em camadas, e dar nome para cada objeto (#id).
-Salvar SVG com "Elementos de Estilo" para que cada estilo tenha uma classe separada (.estilo).

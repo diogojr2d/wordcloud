@@ -1,0 +1,23 @@
+# GUIA PARA SVG
+
+Separar em camadas, e dar nome para cada objeto (#id).
+Salvar SVG com "Elementos de Estilo" para que cada estilo tenha uma classe separada (.estilo).
+
+
+Tarefas
+
+(prazo 01/07)
+1. Verificar se dá pra fazer um circulo grande em:
+  1.1 SVG
+  1.2 ou com div (com tamanho maior que a janela)
+2. Como foram feitos os modais do nalinhadotempo e do Pobreza
+3. Mudar modulos pra <g> com <circle> e <texts> dentro
+
+(prazo 04/07)
+4. JSON precisa ter "tipo da action" (circulo grande, ou modal)
+  4.1 Pra modais precisa ter o "tipo de informação"
+  4.2 Informação dos modais ficará em um (ou mais, de acordo com o tipo) arquivo html separado
+  
+(prazo 06/07)
+5. Formulário pra cadastrar os módulos
+  5.1 Detalhar formulário
