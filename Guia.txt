@@ -10,7 +10,7 @@ Tarefas
 1. Verificar se dá pra fazer um circulo grande em:
   1.1 SVG
   1.2 ou com div (com tamanho maior que a janela)
-2. Como foram feitos os modais do nalinhadotempo e do Pobreza
+2. Como foram feitos os modais do nalinhadotempo e do Pobreza (FAZER com div fixed)
 3. Mudar modulos pra <g> com <circle> e <texts> dentro
 
 (prazo 04/07)

@@ -80,7 +80,7 @@ section {
 * Modules Styles
 */
 .BigCirc0 {
-	fill: #37B;
+	fill: rgba(50, 120, 180, 0.8);
 }
 
 .BigText0 {
@@ -91,7 +91,7 @@ section {
 }
 
 .MedCirc0 {
-	fill: #F7C452;
+	fill: rgba(240, 190, 80, 0.9);
 }
 
 .MedText0 {
@@ -102,7 +102,7 @@ section {
 }
 
 .SmallCirc0 {
-	fill: #AAF;
+	fill: rgba(160, 160, 240, 1);
 }
 
 .SmallText0 {
