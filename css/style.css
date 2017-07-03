@@ -68,6 +68,60 @@ section {
 	display: block;
 	margin: 0;
 }
+.blackout {
+	display: none;
+	width: 100%;
+	height: 100%;
+	background-color: black;
+	opacity: 0.5;
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 98;
+}
+.fechar-modal {
+	width: 20px;
+	height: 20px;
+	background-color: #333;
+	color: #fff;
+	text-align: center;
+	position: absolute;
+	left: 80%;
+	top: 20px;
+	border-radius: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 99;
+}
+.modal-circular {
+	width: 400px;
+	height: 400px;
+	background-color: #e6b;
+	padding: 50px;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	border-radius: 50%;
+	transform: translate(-50%, -50%) scale(0);
+	z-index: 99;
+}
+.modal-circular h1 {
+	max-width: 80%;
+	margin: 10px auto;
+	border: 1px solid black;
+}
+.modal-circular .modal-content {
+	border: 1px solid blue;
+}
+.botao {
+	width: 5px;
+	height: 5px;
+	background-color: #e6b;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	border-radius: 50%;
+	transform: translate(-50%, -50%);
+}
 #stage {
 	text-align: center;
 	margin: auto;
@@ -81,8 +135,9 @@ section {
 */
 .BigCirc0 {
 	fill: rgba(50, 120, 180, 0.8);
+	transform-origin: center;
+	transition: transform 0.25s, fill 0.25s;
 }
-
 .BigText0 {
 	fill: #FFF;
 	font-family: 'Lato', sans-serif;
@@ -91,9 +146,10 @@ section {
 }
 
 .MedCirc0 {
-	fill: rgba(240, 190, 80, 0.9);
+	fill: rgba(200, 120, 40, 0.8);
+	transform-origin: center;
+	transition: transform 0.25s, fill 0.25s;
 }
-
 .MedText0 {
 	fill: #FFF;
 	font-family: 'Lato', sans-serif;
@@ -102,16 +158,16 @@ section {
 }
 
 .SmallCirc0 {
-	fill: rgba(160, 160, 240, 1);
+	fill: rgba(160, 160, 240, 0.9);
+	transform-origin: center;
+	transition: transform 0.2s, fill 0.2s;
 }
-
 .SmallText0 {
 	fill: #FFF;
 	font-family: 'Lato', sans-serif;
 	font-size: 14;
 }
-
-
-/*
-* Movement and Animations
-*/
+.circ-in {
+	transform: scale(1.1);
+	fill: #333;
+}

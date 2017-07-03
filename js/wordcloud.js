@@ -1,4 +1,4 @@
-// FAZENDO O MOVECLOUD
+// FAZER FECHAR MODAL CIRCULAR
 
 $(document).ready(function(){
 
@@ -84,8 +84,6 @@ function initCloud() {
         svg = SVG('stage').size(drawStage.width, '100%');
 
         CreateDraw();
-
-        //ShakePositions(50);
 };
 
 function CreateDraw() {
@@ -110,6 +108,7 @@ function CreateDraw() {
     groups[1] = panel.group();
     groups[0] = panel.group();
 
+
     // Loop para criar os Modulos
     for (var i = 0; i < nModules; i++) {
         curRow = i%3;
@@ -128,31 +127,48 @@ function CreateDraw() {
 function DrawModule(obj, pos, level, modParent) {
     var id = obj.wcid;
 
+    var actualSize = modSize/Math.pow(lvlRatio, level);
+
+    ShakePosition(pos, actualSize/1.5);
+
     if (level == 0) {
-        var gamb = 0;
-        while (TestCollision(pos, 0) && (gamb < 50) ) {
-            pos.x = pos.x + Math.floor(Math.random()*50-50/2);
-            pos.y = pos.y + Math.floor(Math.random()*50-50/2);
-            gamb++;
+        var spacingCount = 0;
+        while (TestCollision(pos, 0) && (spacingCount < 50) ) {
+            ShakePosition(pos, actualSize);
+            spacingCount++;
         }
-        if (gamb>=50) {
-            while (TestCollision(pos, 0) && (gamb < 200) ) {
-                pos.x = pos.x + Math.floor(Math.random()*150-150/2);
-                pos.y = pos.y + Math.floor(Math.random()*150-150/2);
-                gamb++;
+        if (spacingCount>=50) {
+            while (TestCollision(pos, 0) && (spacingCount < 200) ) {
+                ShakePosition(pos, actualSize*2);
+                spacingCount++;
             }
-            if (gamb>=200)
+            if (spacingCount>=200)
                 console.log("Falhou em espaçar o level 0");
         }
     }
 
-    modules[id] = modParent.circle(modSize/Math.pow(lvlRatio, level)).cx(pos.x).cy(pos.y);
-    $('#' + modules[id].id()).addClass(obj.classe+'Circ0');
+    // Cria grupo do Módulo
+    modules[id] = modParent.group();
+    modules[id].addClass('svgModule');
+    // Cria circulo
+    var currentCirc = modules[id].circle(actualSize).cx(pos.x).cy(pos.y);
+    currentCirc.addClass(obj.classe+'Circ0');
+    // Cria texto (Titulo)
+    var currentTxt = modules[id].text(obj.titulo).cx(pos.x).cy(pos.y);
+    currentTxt.addClass(obj.classe+'Text0');
 
-    // Debug
-    //DrawCollisionBox(pos, level);
+    if (obj.tipoAcao == "circular") {
+        $(modules[id].node).click(
+            function() {
+                CriaCircular(obj.titulo, obj.infoID);
+            }
+        );
+    }
+    
+
     SetCollision(pos, level);
 
+    // Chama a criação dos filhos recursivamente
     if (obj.hasOwnProperty('children')) {
         var newPos = DefinePosition(pos, level+1, obj.children.length);
         for (var i = 0; i < obj.children.length; i++) {
@@ -250,25 +266,32 @@ function Dist(x1, y1, x2, y2) {
     return ( Math.sqrt( Math.pow(x2-x1, 2) + Math.pow(y2-y1, 2) ) );
 }
 
-function ShakePositions(index) {
-    var nCircles = $('circle').length;
-    var shakex = 0;
-    var shakey = 0;
-    var cx, cy;
-    for (var i = 0; i < nCircles; i++) {
-        shakex = Math.floor(Math.random()*index-index/2);
-        shakey = Math.floor(Math.random()*index-index/2);
-        cx = parseFloat( $('circle:eq('+i+')').attr('cx') );
-        cy = parseFloat( $('circle:eq('+i+')').attr('cy') );
-        $('circle:eq('+i+')').attr({'cx': (cx+shakex),
-                                    'cy': (cy+shakey) });
-    } 
+function ShakePositions(intensity, obj_) {
+    if (obj_ == undefined) {
+        var nCircles = modules.length;
+        var shakex = 0;
+        var shakey = 0;
+        var i = 12;
+        for (var i = 0; i < nCircles; i++) {
+            var circ = $('g.svgModule:eq('+i+') circle:first-child');
+            shakex = Math.floor( (Math.random()*intensity-intensity/2) * circ.attr('r') );
+            shakey = Math.floor( (Math.random()*intensity-intensity/2) * circ.attr('r') );
+            $('g.svgModule:eq('+i+')').css({'transform': 'translate('+shakex+'px,'+shakey+'px)'});
+        }
+    }
+    else {
+        var circ = obj_.first();
+        var shakex = Math.floor( (Math.random()*intensity-intensity/2) * circ.attr('r') );
+        var shakey = Math.floor( (Math.random()*intensity-intensity/2) * circ.attr('r') );
+        obj_.first().attr({'cx': obj_.first().attr('cx')+shakex,
+                           'cy': obj_.first().attr('cy')+shakey });
+    }
 };
 
-
-$('#stage').mousemove(function(evt) {
-    MoveCloud(evt);
-});
+function ShakePosition(pos, intensity) {
+    pos.x += Math.floor(Math.random()*intensity-intensity/2);
+    pos.y += Math.floor(Math.random()*intensity-intensity/2);
+}
 
 function MoveCloud(evt) {
     var mouse = { "x": evt.pageX,
@@ -292,11 +315,37 @@ function MoveCloud(evt) {
         var id = '#' + (groups[i]).id();
         $(id).css({'transform': 'translate('+displacementX+'px, '+displacementY+'px)' })
     }
-}
+};
+
+$('#stage').mousemove(function(evt) {
+    MoveCloud(evt);
+});
+
+$('.svgModule').hover(
+    function() {
+        $(this).children(':first').addClass('circ-in');
+    },
+    function() {
+        $(this).children(':first').removeClass('circ-in');
+    }
+);
+
+$('.svgModule').click(
+    function() {
+        $(this).children(':first').addClass('circ-in');
+    }
+);
 
 function Formatter(n_, casas = 6) {
     return parseFloat( n_.toFixed(casas) );
 };
+
+function CriaCircular(tit, info) {
+    $('.modal-circular h1').text(tit);
+    $('.modal-circular .modal-content').html(info);
+    $('.modal-circular').css({'transform': 'translate(-50%, -50%) scale(1)'});
+    $('.blackout').css('display', 'initial');
+}
 
 // end document.ready() 
 });
@@ -307,22 +356,30 @@ var myJSON = {
         {
             "wcid": 0,
             "classe": "Big",
-            "titulo": "EDUCAÇÃO",
+            "titulo": "TITULO1",
+            "tipoAcao": "circular",
+            "infoID": "blablabla<br>Lorem ipsum dolor sit amet.<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>",
             "children": [
                 {
                 "wcid": 1,
                 "classe": "Med",
-                "titulo": "Mídia"
+                "titulo": "Titulo1",
+                "tipoAcao": "circular",
+                "infoID": "blablabla<br>Lorem ipsum dolor sit amet.<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>"
                 },
                 {
                 "wcid": 2,
                 "classe": "Med",
-                "titulo": "Aloha"
+                "titulo": "Titulo2",
+                "tipoAcao": "circular",
+                "infoID": "blablabla<br>Lorem ipsum dolor sit amet.<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>"
                 },
                 {
                 "wcid": 3,
                 "classe": "Med",
-                "titulo": "Outra"
+                "titulo": "Titulo3",
+                "tipoAcao": "circular",
+                "infoID": "blablabla<br>Lorem ipsum dolor sit amet.<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>"
                 },
             ]
         },
@@ -330,12 +387,15 @@ var myJSON = {
         {
             "wcid": 4,
             "classe": "Big",
-            "titulo": "COMUNICAÇÃO",
+            "titulo": "TITULO2",
+            "tipoAcao": "separada",
             "children": [
                 {
                 "wcid": 5,
                 "classe": "Med",
-                "titulo": "Cima"
+                "titulo": "Titulo4",
+                "tipoAcao": "circular",
+                "infoID": "blablabla<br>Lorem ipsum dolor sit amet.<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>"
                 }
             ]
         },
@@ -343,17 +403,23 @@ var myJSON = {
         {
             "wcid": 6,
             "classe": "Big",
-            "titulo": "FORMAÇÃO",
+            "titulo": "TITULO3",
+            "tipoAcao": "circular",
+            "infoID": "blablabla<br>Lorem ipsum dolor sit amet.<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>",
             "children": [
                 {
                 "wcid": 7,
                 "classe": "Med",
-                "titulo": "Esquerda"
+                "titulo": "Titulo5",
+                "tipoAcao": "circular",
+                "infoID": "blablabla<br>Lorem ipsum dolor sit amet.<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>"
                 },
                 {
                 "wcid": 8,
                 "classe": "Med",
-                "titulo": "Baixo"
+                "titulo": "Titulo6",
+                "tipoAcao": "circular",
+                "infoID": "blablabla<br>Lorem ipsum dolor sit amet.<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>"
                 },
             ]
         },
@@ -361,12 +427,16 @@ var myJSON = {
         {
             "wcid": 9,
             "classe": "Big",
-            "titulo": "DISTÂNCIA",
+            "titulo": "TITULO4",
+            "tipoAcao": "circular",
+            "infoID": "blablabla<br>Lorem ipsum dolor sit amet.<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>",
             "children": [
                 {
                 "wcid": 10,
                 "classe": "Med",
-                "titulo": "Lado"
+                "titulo": "Titulo7",
+                "tipoAcao": "circular",
+                "infoID": "blablabla<br>Lorem ipsum dolor sit amet.<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>"
                 }
             ]
         },
@@ -374,17 +444,23 @@ var myJSON = {
         {
             "wcid": 11,
             "classe": "Big",
-            "titulo": "DISTÂNCIA",
+            "titulo": "TITULO5",
+            "tipoAcao": "circular",
+            "infoID": "blablabla<br>Lorem ipsum dolor sit amet.<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>",
             "children": [
                 {
                 "wcid": 12,
                 "classe": "Med",
-                "titulo": "Lado",
+                "titulo": "Titulo8",
+                "tipoAcao": "circular",
+                "infoID": "blablabla<br>Lorem ipsum dolor sit amet.<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>",
                 "children": [
                     {
                     "wcid": 19,
                     "classe": "Small",
-                    "titulo": "Neta"
+                    "titulo": "Titulo9",
+                    "tipoAcao": "circular",
+                    "infoID": "blablabla<br>Lorem ipsum dolor sit amet.<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>"
                     }
                     ]
                 }
@@ -394,12 +470,16 @@ var myJSON = {
         {
             "wcid": 13,
             "classe": "Big",
-            "titulo": "DISTÂNCIA",
+            "titulo": "TITULO6",
+            "tipoAcao": "circular",
+            "infoID": "blablabla<br>Lorem ipsum dolor sit amet.<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>",
             "children": [
                 {
                 "wcid": 14,
                 "classe": "Med",
-                "titulo": "Lado"
+                "titulo": "Titulo10",
+                "tipoAcao": "circular",
+                "infoID": "blablabla<br>Lorem ipsum dolor sit amet.<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>"
                 }
             ]
         },
@@ -407,12 +487,16 @@ var myJSON = {
         {
             "wcid": 15,
             "classe": "Big",
-            "titulo": "DISTÂNCIA",
+            "titulo": "TITULO7",
+            "tipoAcao": "circular",
+            "infoID": "blablabla<br>Lorem ipsum dolor sit amet.<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>",
             "children": [
                 {
                 "wcid": 16,
                 "classe": "Med",
-                "titulo": "Lado"
+                "titulo": "Titulo11",
+                "tipoAcao": "circular",
+                "infoID": "blablabla<br>Lorem ipsum dolor sit amet.<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>"
                 }
             ]
         },
@@ -420,60 +504,18 @@ var myJSON = {
         {
             "wcid": 17,
             "classe": "Big",
-            "titulo": "DISTÂNCIA",
+            "titulo": "TITULO8",
+            "tipoAcao": "circular",
+            "infoID": "blablabla<br>Lorem ipsum dolor sit amet.<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>",
             "children": [
                 {
                 "wcid": 18,
                 "classe": "Med",
-                "titulo": "Lado"
+                "titulo": "Titulo12",
+                "tipoAcao": "circular",
+                "infoID": "blablabla<br>Lorem ipsum dolor sit amet.<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>"
                 }
             ]
         },
-    ]
-};
-
-var myJSON2 = {
-    "objetos":
-    [
-        {
-            "wcid": 0,
-            "classe": "Big",
-            "titulo": "EDUCAÇÃO",
-            "children": [
-                {
-                "wcid": 1,
-                "classe": "Med",
-                "titulo": "Mídia"
-                },
-                {
-                "wcid": 2,
-                "classe": "Med",
-                "titulo": "Aloha"
-                },
-                {
-                "wcid": 3,
-                "classe": "Med",
-                "titulo": "Outra"
-                },
-            ]
-        },
-        
-        {
-            "wcid": 4,
-            "classe": "Big",
-            "titulo": "COMUNICAÇÃO",
-            "children": [
-                {
-                "wcid": 5,
-                "classe": "Med",
-                "titulo": "Cima"
-                },
-                {
-                "wcid": 6,
-                "classe": "Med",
-                "titulo": "Lado"
-                }
-            ]
-        }
     ]
 };

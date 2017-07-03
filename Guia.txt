@@ -13,6 +13,10 @@ Tarefas
 2. Como foram feitos os modais do nalinhadotempo e do Pobreza (FAZER com div fixed)
 3. Mudar modulos pra <g> com <circle> e <texts> dentro
 
+DEFINIDO:
+modal circular: div (position absolute)
+modal normal: div (position fixed)
+
 (prazo 04/07)
 4. JSON precisa ter "tipo da action" (circulo grande, ou modal)
   4.1 Pra modais precisa ter o "tipo de informação"
@@ -21,3 +25,6 @@ Tarefas
 (prazo 06/07)
 5. Formulário pra cadastrar os módulos
   5.1 Detalhar formulário
+
+
+6. Modificar colisão pra comparar com cada circulo já existente e verificar se é mais rápido
