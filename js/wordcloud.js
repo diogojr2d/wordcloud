@@ -1,5 +1,3 @@
-// FAZER FECHAR MODAL CIRCULAR
-
 $(document).ready(function(){
 
 $(window).on('resize', function() {
@@ -37,8 +35,27 @@ collMap = { "arr": [],
             "cSize": 0 },
 cModalSize = 0;
 
-initCloud();
+/*var myJSON = {};
 
+function loadJSON() {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            myJSON = JSON.parse(xhttp.responseText);
+            console.log("JSON carregado com sucesso.");
+
+            initCloud();
+
+            SetActions();
+        }
+    };
+    xhttp.open("POST", "js/wordcloud.json", false);
+    xhttp.send();
+};
+
+loadJSON();*/
+initCloud();
+SetActions();
 function initCloud() {
         // Inicialização de variáveis
         windowWidth = $(window).width();
@@ -200,30 +217,7 @@ function DefinePosition(pos_, level_, nChildren_) {
     }
     return posCalc;
 };
-/*
-function DrawCollisionBox(pos, level_) {
-    var rad = ((modSize/Math.pow(lvlRatio, level_))/2)/collMap.cSize>>0;
-    var posScaled = {"x": pos.x/collMap.cSize>>0,
-                     "y": pos.y/collMap.cSize>>0 };
 
-    var sk = posScaled.x - rad,
-        ek = posScaled.x + rad,
-        sl = posScaled.y - rad,
-        el = posScaled.y + rad;
-
-    for (var i = sk; i < ek; i++) {
-        var ic = i*collMap.width;
-        for (var j = sl; j < el; j++) {
-            if (Dist(i, j, posScaled.x, posScaled.y) < rad) {
-                var xx1 = i*collMap.cSize;
-                var yy1 = j*collMap.cSize;
-                svg.rect(collMap.cSize, collMap.cSize).move(xx1, yy1).fill('rgba(0,0,0,0.5)');
-                collMap.arr[ic+j] = true;
-            }
-        }
-    }
-}
-*/
 function SetCollision(pos, level_) {
     var rad = ((modSize/Math.pow(lvlRatio, level_))/2)/collMap.cSize>>0;
     var posScaled = {"x": pos.x/collMap.cSize>>0,
@@ -300,7 +294,7 @@ function ShakePosition(pos, intensity) {
 
 function MoveCloud(evt) {
     var mouse = { "x": evt.pageX,
-                  "y": evt.pageY }; // Testar, se for Chrome pode usar originalEvent.layerX
+                  "y": evt.pageY };
     
     var relMouse = { "x": (mouse.x - windowCenter.x)/(windowWidth/2),
                      "y": (mouse.y - windowCenter.y)/(windowHeight/2) };
@@ -322,25 +316,6 @@ function MoveCloud(evt) {
     }
 };
 
-$('#stage').mousemove(function(evt) {
-    MoveCloud(evt);
-});
-
-$('.svgModule').hover(
-    function() {
-        $(this).children(':first').addClass('circ-in');
-    },
-    function() {
-        $(this).children(':first').removeClass('circ-in');
-    }
-);
-
-$('.fechar-modal').click(
-    function() {
-        FecharCircular();
-    }
-);
-
 function Formatter(n_, casas = 6) {
     return parseFloat( n_.toFixed(casas) );
 };
@@ -358,6 +333,27 @@ function FecharCircular() {
     $('.modal-circular').css({'transform': 'translate(-50%, -50%) scale(0)'});
     $('.blackout').fadeOut("fast");
     $('.fechar-modal').fadeOut("fast");
+};
+
+function SetActions() {
+    $('#stage').mousemove(function(evt) {
+        MoveCloud(evt);
+    });
+
+    $('.svgModule').hover(
+        function() {
+            $(this).children(':first').addClass('circ-in');
+        },
+        function() {
+            $(this).children(':first').removeClass('circ-in');
+        }
+    );
+
+    $('.fechar-modal').click(
+        function() {
+            FecharCircular();
+        }
+    );
 };
 
 // end document.ready() 
@@ -393,7 +389,7 @@ var myJSON = {
                 "titulo": "Titulo3",
                 "tipoAcao": "circular",
                 "infoID": "blablabla<br>Lorem ipsum dolor sit amet.<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>"
-                },
+                }
             ]
         },
         
@@ -433,7 +429,7 @@ var myJSON = {
                 "titulo": "Titulo6",
                 "tipoAcao": "circular",
                 "infoID": "blablabla<br>Lorem ipsum dolor sit amet.<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>"
-                },
+                }
             ]
         },
 
@@ -529,6 +525,31 @@ var myJSON = {
                 "infoID": "blablabla<br>Lorem ipsum dolor sit amet.<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>"
                 }
             ]
-        },
+        }
     ]
 };
+
+/*
+function DrawCollisionBox(pos, level_) {
+    var rad = ((modSize/Math.pow(lvlRatio, level_))/2)/collMap.cSize>>0;
+    var posScaled = {"x": pos.x/collMap.cSize>>0,
+                     "y": pos.y/collMap.cSize>>0 };
+
+    var sk = posScaled.x - rad,
+        ek = posScaled.x + rad,
+        sl = posScaled.y - rad,
+        el = posScaled.y + rad;
+
+    for (var i = sk; i < ek; i++) {
+        var ic = i*collMap.width;
+        for (var j = sl; j < el; j++) {
+            if (Dist(i, j, posScaled.x, posScaled.y) < rad) {
+                var xx1 = i*collMap.cSize;
+                var yy1 = j*collMap.cSize;
+                svg.rect(collMap.cSize, collMap.cSize).move(xx1, yy1).fill('rgba(0,0,0,0.5)');
+                collMap.arr[ic+j] = true;
+            }
+        }
+    }
+}
+*/

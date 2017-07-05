@@ -131,6 +131,8 @@ section {
 */
 .BigCirc0 {
 	fill: rgba(50, 120, 180, 0.8);
+	-ms-transform-origin: center;
+	-webkit-transform-origin: center;
 	transform-origin: center;
 	transition: transform 0.25s, fill 0.25s;
 }
@@ -143,6 +145,8 @@ section {
 
 .MedCirc0 {
 	fill: rgba(200, 120, 40, 0.8);
+	-ms-transform-origin: center;
+	-webkit-transform-origin: center;
 	transform-origin: center;
 	transition: transform 0.25s, fill 0.25s;
 }
@@ -155,6 +159,8 @@ section {
 
 .SmallCirc0 {
 	fill: rgba(160, 160, 240, 0.9);
+	-ms-transform-origin: center;
+	-webkit-transform-origin: center;
 	transform-origin: center;
 	transition: transform 0.2s, fill 0.2s;
 }
