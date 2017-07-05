@@ -34,7 +34,8 @@ fatMove3 = 0,
 collMap = { "arr": [],
             "width": 0,
             "height": 0,
-            "cSize": 0 };
+            "cSize": 0 },
+cModalSize = 0;
 
 initCloud();
 
@@ -59,6 +60,7 @@ function initCloud() {
                             "y": drawStage.height/2 };
         rowSize = wrapperHeight/3>>0;
         colSize = drawStage.width/nCols;
+        cModalSize = Math.min(wrapperHeight, windowWidth);
 
         // Inicializa Collision Map
         collMap.cSize = 10;
@@ -80,6 +82,9 @@ function initCloud() {
         $(".content").height(wrapperHeight);
         $("#wrapper").height(wrapperHeight);
         $("#stage").height(wrapperHeight);
+        $(".modal-circular").css('padding', cModalSize*0.1>>0 + 'px');
+        $(".modal-circular").outerHeight(cModalSize);
+        $(".modal-circular").outerWidth(cModalSize);
 
         svg = SVG('stage').size(drawStage.width, '100%');
 
@@ -159,8 +164,8 @@ function DrawModule(obj, pos, level, modParent) {
 
     if (obj.tipoAcao == "circular") {
         $(modules[id].node).click(
-            function() {
-                CriaCircular(obj.titulo, obj.infoID);
+            function(evt) {
+                CriarCircular(obj.titulo, obj.infoID);
             }
         );
     }
@@ -330,9 +335,9 @@ $('.svgModule').hover(
     }
 );
 
-$('.svgModule').click(
+$('.fechar-modal').click(
     function() {
-        $(this).children(':first').addClass('circ-in');
+        FecharCircular();
     }
 );
 
@@ -340,12 +345,20 @@ function Formatter(n_, casas = 6) {
     return parseFloat( n_.toFixed(casas) );
 };
 
-function CriaCircular(tit, info) {
+function CriarCircular(tit, info) {
     $('.modal-circular h1').text(tit);
     $('.modal-circular .modal-content').html(info);
     $('.modal-circular').css({'transform': 'translate(-50%, -50%) scale(1)'});
-    $('.blackout').css('display', 'initial');
-}
+    $('.blackout').fadeIn("fast");
+    $('.fechar-modal').css({'left': ( parseInt($('.modal-circular').css('left')) + cModalSize/2 ) });
+    $('.fechar-modal').fadeIn("fast");
+};
+
+function FecharCircular() {
+    $('.modal-circular').css({'transform': 'translate(-50%, -50%) scale(0)'});
+    $('.blackout').fadeOut("fast");
+    $('.fechar-modal').fadeOut("fast");
+};
 
 // end document.ready() 
 });
