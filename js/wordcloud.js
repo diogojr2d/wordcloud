@@ -35,7 +35,7 @@ collMap = { "arr": [],
             "cSize": 0 },
 cModalSize = 0;
 
-/*var myJSON = {};
+var myJSON = {};
 
 function loadJSON() {
     var xhttp = new XMLHttpRequest();
@@ -49,13 +49,12 @@ function loadJSON() {
             SetActions();
         }
     };
-    xhttp.open("POST", "js/wordcloud.json", false);
+    xhttp.open("POST", "js/wordcloud.json", true);
     xhttp.send();
 };
 
-loadJSON();*/
-initCloud();
-SetActions();
+loadJSON();
+
 function initCloud() {
         // Inicialização de variáveis
         windowWidth = $(window).width();
@@ -96,7 +95,6 @@ function initCloud() {
         fatMove3 = Math.abs(windowHeight - drawStage.height)/2;
 
         // Configura CSS inicial
-        $(".content").height(wrapperHeight);
         $("#wrapper").height(wrapperHeight);
         $("#stage").height(wrapperHeight);
         $(".modal-circular").css('padding', cModalSize*0.1>>0 + 'px');
@@ -358,176 +356,6 @@ function SetActions() {
 
 // end document.ready() 
 });
-
-var myJSON = {
-    "objetos":
-    [
-        {
-            "wcid": 0,
-            "classe": "Big",
-            "titulo": "TITULO1",
-            "tipoAcao": "circular",
-            "infoID": "blablabla<br>Lorem ipsum dolor sit amet.<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>",
-            "children": [
-                {
-                "wcid": 1,
-                "classe": "Med",
-                "titulo": "Titulo1",
-                "tipoAcao": "circular",
-                "infoID": "blablabla<br>Lorem ipsum dolor sit amet.<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>"
-                },
-                {
-                "wcid": 2,
-                "classe": "Med",
-                "titulo": "Titulo2",
-                "tipoAcao": "circular",
-                "infoID": "blablabla<br>Lorem ipsum dolor sit amet.<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>"
-                },
-                {
-                "wcid": 3,
-                "classe": "Med",
-                "titulo": "Titulo3",
-                "tipoAcao": "circular",
-                "infoID": "blablabla<br>Lorem ipsum dolor sit amet.<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>"
-                }
-            ]
-        },
-        
-        {
-            "wcid": 4,
-            "classe": "Big",
-            "titulo": "TITULO2",
-            "tipoAcao": "separada",
-            "children": [
-                {
-                "wcid": 5,
-                "classe": "Med",
-                "titulo": "Titulo4",
-                "tipoAcao": "circular",
-                "infoID": "blablabla<br>Lorem ipsum dolor sit amet.<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>"
-                }
-            ]
-        },
-
-        {
-            "wcid": 6,
-            "classe": "Big",
-            "titulo": "TITULO3",
-            "tipoAcao": "circular",
-            "infoID": "blablabla<br>Lorem ipsum dolor sit amet.<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>",
-            "children": [
-                {
-                "wcid": 7,
-                "classe": "Med",
-                "titulo": "Titulo5",
-                "tipoAcao": "circular",
-                "infoID": "blablabla<br>Lorem ipsum dolor sit amet.<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>"
-                },
-                {
-                "wcid": 8,
-                "classe": "Med",
-                "titulo": "Titulo6",
-                "tipoAcao": "circular",
-                "infoID": "blablabla<br>Lorem ipsum dolor sit amet.<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>"
-                }
-            ]
-        },
-
-        {
-            "wcid": 9,
-            "classe": "Big",
-            "titulo": "TITULO4",
-            "tipoAcao": "circular",
-            "infoID": "blablabla<br>Lorem ipsum dolor sit amet.<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>",
-            "children": [
-                {
-                "wcid": 10,
-                "classe": "Med",
-                "titulo": "Titulo7",
-                "tipoAcao": "circular",
-                "infoID": "blablabla<br>Lorem ipsum dolor sit amet.<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>"
-                }
-            ]
-        },
-
-        {
-            "wcid": 11,
-            "classe": "Big",
-            "titulo": "TITULO5",
-            "tipoAcao": "circular",
-            "infoID": "blablabla<br>Lorem ipsum dolor sit amet.<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>",
-            "children": [
-                {
-                "wcid": 12,
-                "classe": "Med",
-                "titulo": "Titulo8",
-                "tipoAcao": "circular",
-                "infoID": "blablabla<br>Lorem ipsum dolor sit amet.<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>",
-                "children": [
-                    {
-                    "wcid": 19,
-                    "classe": "Small",
-                    "titulo": "Titulo9",
-                    "tipoAcao": "circular",
-                    "infoID": "blablabla<br>Lorem ipsum dolor sit amet.<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>"
-                    }
-                    ]
-                }
-            ]
-        },
-
-        {
-            "wcid": 13,
-            "classe": "Big",
-            "titulo": "TITULO6",
-            "tipoAcao": "circular",
-            "infoID": "blablabla<br>Lorem ipsum dolor sit amet.<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>",
-            "children": [
-                {
-                "wcid": 14,
-                "classe": "Med",
-                "titulo": "Titulo10",
-                "tipoAcao": "circular",
-                "infoID": "blablabla<br>Lorem ipsum dolor sit amet.<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>"
-                }
-            ]
-        },
-
-        {
-            "wcid": 15,
-            "classe": "Big",
-            "titulo": "TITULO7",
-            "tipoAcao": "circular",
-            "infoID": "blablabla<br>Lorem ipsum dolor sit amet.<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>",
-            "children": [
-                {
-                "wcid": 16,
-                "classe": "Med",
-                "titulo": "Titulo11",
-                "tipoAcao": "circular",
-                "infoID": "blablabla<br>Lorem ipsum dolor sit amet.<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>"
-                }
-            ]
-        },
-
-        {
-            "wcid": 17,
-            "classe": "Big",
-            "titulo": "TITULO8",
-            "tipoAcao": "circular",
-            "infoID": "blablabla<br>Lorem ipsum dolor sit amet.<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>",
-            "children": [
-                {
-                "wcid": 18,
-                "classe": "Med",
-                "titulo": "Titulo12",
-                "tipoAcao": "circular",
-                "infoID": "blablabla<br>Lorem ipsum dolor sit amet.<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>"
-                }
-            ]
-        }
-    ]
-};
 
 /*
 function DrawCollisionBox(pos, level_) {

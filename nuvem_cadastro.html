@@ -11,8 +11,8 @@
 
 	<link rel="stylesheet" href="css/style.css">
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/svg.js/2.6.2/svg.min.js"></script>
-	<script src="js/wordcloud.js"></script>
+	<script src="js/setcontent.js"></script>
+
 </head>
 <body>
 <header>
@@ -20,7 +20,7 @@
 </header>
 
 <div class="content">
-	<div class="formulario col3-4 tcenter">
+	<div class="formulario col2-4 left">
 		<form method="post" action="validateform.php">
 		<div class="col1-4 left tright">
 			<p><label for="fparent">Pai:</label></p>
@@ -29,17 +29,40 @@
 			<p><label for="fdesc">Descrição:</label></p>
 		</div>
 		<div class="col3-4 right tleft">
-			<p><input type="text" id="fparent" name="fparent" required/></p>
+			<p>
+				<select id="fparent" name="fparent">
+
+				</select>
+			</p>
 			<p><input type="text" id="fclass" name="fclass" required/></p>
 			<p><input type="text" id="ftitle" name="ftitle" required/></p>
 			<p><input type="textarea" id="fdesc" name="fdesc" required/></p>
 		</div>
 	</div>
+	<div class="col2-4 right">
+		<object data="js/wordcloud.json" width='100%' height='100%'></object>
+	</div>
 </div>
 
 <footer>
-	<section class="col2-4 tcenter">Copyright - The Gym, 2017</section>
+	<section class="col2-4 tcenter" id="fora">Copyright - The Gym, 2017</section>
 </footer>
+<script type="text/javascript">
+	var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var myJSON = JSON.parse(xhttp.responseText);
+            console.log("JSON carregado com sucesso.");
 
+            for (var i = 0; i < myJSON.objetos.length; i++) {
+            	$('select#fparent').append(
+            		'<option value='+myJSON.objetos[i].wcid+'>'+myJSON.objetos[i].titulo+'</option>'
+            	);
+            }
+        }
+    };
+    xhttp.open("POST", "js/wordcloud.json", true);
+    xhttp.send();
+</script>
 </body>
 </html>
