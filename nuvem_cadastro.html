@@ -11,8 +11,7 @@
 
 	<link rel="stylesheet" href="css/style.css">
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<script src="js/setcontent.js"></script>
-
+	<script src="js/func.js"></script>
 </head>
 <body>
 <header>
@@ -20,24 +19,24 @@
 </header>
 
 <div class="content">
-	<div class="formulario col2-4 left">
+	<div class="col2-4 left">
 		<form method="post" action="validateform.php">
 		<div class="col1-4 left tright">
-			<p><label for="fparent">Pai:</label></p>
-			<p><label for="fclass">Classe:</label></p>
+			<p><label for="fparent">Predecessor:</label></p>
 			<p><label for="ftitle">Titulo:</label></p>
-			<p><label for="fdesc">Descrição:</label></p>
+			<p><label for="finfo">Informação:</label></p>
 		</div>
 		<div class="col3-4 right tleft">
 			<p>
 				<select id="fparent" name="fparent">
-
+					<option value='None'>Nenhum</option>
 				</select>
 			</p>
-			<p><input type="text" id="fclass" name="fclass" required/></p>
-			<p><input type="text" id="ftitle" name="ftitle" required/></p>
-			<p><input type="textarea" id="fdesc" name="fdesc" required/></p>
+			<p><input type="text" id="ftitle" name="ftitle" maxlength="50" required autofocus/></p>
+			<p><textarea id="finfo" name="finfo" required></textarea></p>
+			<p><button></p>
 		</div>
+		</form>
 	</div>
 	<div class="col2-4 right">
 		<object data="js/wordcloud.json" width='100%' height='100%'></object>
@@ -48,21 +47,9 @@
 	<section class="col2-4 tcenter" id="fora">Copyright - The Gym, 2017</section>
 </footer>
 <script type="text/javascript">
-	var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            var myJSON = JSON.parse(xhttp.responseText);
-            console.log("JSON carregado com sucesso.");
+	SetCSS();
 
-            for (var i = 0; i < myJSON.objetos.length; i++) {
-            	$('select#fparent').append(
-            		'<option value='+myJSON.objetos[i].wcid+'>'+myJSON.objetos[i].titulo+'</option>'
-            	);
-            }
-        }
-    };
-    xhttp.open("POST", "js/wordcloud.json", true);
-    xhttp.send();
+	SetForm();
 </script>
 </body>
 </html>

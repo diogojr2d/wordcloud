@@ -32,10 +32,29 @@ footer section {
 section {
 	display: inline-block;
 	margin: 0;
-	min-width: 200px;
+	min-width: 160px;
 }
-iframe {
-	border: none;
+form select, form input {
+	width: 160px;
+	max-height: 20px;
+}
+form p {
+	min-height: 20px;
+	padding: 0 2px;
+	font-size: 0.8em;
+	display: flex;
+	align-items: center;
+	/*border: solid 1px black;*/
+}
+label {
+	margin-left: auto;
+	/*border: solid 1px blue;*/
+}
+form textarea {
+	align-self: flex-start;
+	min-width: 160px;
+	width: 320px;
+	height: 120px;
 }
 .col1-4 {
 	width: 24.5%;
@@ -127,10 +146,6 @@ iframe {
 #stage {
 	text-align: center;
 	margin: auto;
-}
-.formulario p {
-	height: 20px;
-	padding: 0 2px;
 }
 /*
 * Modules Styles

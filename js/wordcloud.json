@@ -165,5 +165,10 @@
                 }
             ]
         }
-	]
+	],
+
+    "config": {
+        "classes": ["Big", "Med", "Small"],
+        "tiposAcao": ["circular", "separado"]
+    }
 }

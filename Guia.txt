@@ -17,3 +17,6 @@ OK 4. JSON precisa ter "tipo da action" (circulo grande, ou modal)
 
 *** OPCIONAL ***
 6. Modificar colisão pra comparar com cada circulo já existente e verificar se é mais rápido
+
+
+http://www.devmedia.com.br/criando-um-sistema-de-cadastro-e-login-com-php-e-mysql/37213
