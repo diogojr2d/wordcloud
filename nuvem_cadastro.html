@@ -14,13 +14,16 @@
 	<script src="js/func.js"></script>
 </head>
 <body>
+
 <header>
 	<div>header header header</div>
 </header>
 
+<?php include 'header.php'; ?>
+
 <div class="content">
 	<div class="col2-4 left">
-		<form method="post" action="validateform.php">
+		<form method="post" action="cadastrarmodulo.php">
 		<div class="col1-4 left tright">
 			<p><label for="fparent">Predecessor:</label></p>
 			<p><label for="ftitle">Titulo:</label></p>
@@ -34,7 +37,7 @@
 			</p>
 			<p><input type="text" id="ftitle" name="ftitle" maxlength="50" required autofocus/></p>
 			<p><textarea id="finfo" name="finfo" required></textarea></p>
-			<p><button></p>
+			<p><button type="submit">Cadastrar</button></p>
 		</div>
 		</form>
 	</div>
@@ -43,9 +46,12 @@
 	</div>
 </div>
 
+<?php include 'footer.php'; ?>
+
 <footer>
 	<section class="col2-4 tcenter" id="fora">Copyright - The Gym, 2017</section>
 </footer>
+
 <script type="text/javascript">
 	SetCSS();
 

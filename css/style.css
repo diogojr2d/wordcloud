@@ -34,9 +34,13 @@ section {
 	margin: 0;
 	min-width: 160px;
 }
-form select, form input {
+form input {
 	width: 160px;
 	max-height: 20px;
+}
+form select {
+	width: 168px;
+	max-height: 24px;
 }
 form p {
 	min-height: 20px;
@@ -55,6 +59,7 @@ form textarea {
 	min-width: 160px;
 	width: 320px;
 	height: 120px;
+	max-height: 400px;
 }
 .col1-4 {
 	width: 24.5%;
